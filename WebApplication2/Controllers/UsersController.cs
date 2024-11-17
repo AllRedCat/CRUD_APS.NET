@@ -18,4 +18,19 @@ public class UsersController(AppDbContext context) : ControllerBase
         }
         return await context.Users.ToListAsync();
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Users>> GetUsers(int id)
+    {
+        if (!context.Users.Any())
+        {
+            return NotFound();
+        }
+        var user = await context.Users.FindAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return user;
+    }
 }
