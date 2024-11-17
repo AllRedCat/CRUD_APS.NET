@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
+using System.Text;
 using WebApplication2.Data;
 using WebApplication2.Model;
 
@@ -9,6 +11,18 @@ namespace WebApplication2.Controllers;
 [Route("api/[controller]")]
 public class UsersController(AppDbContext context) : ControllerBase
 {
+    private string GenerateSha256Hash(string input)
+    {
+        using SHA256 sha256Hash = SHA256.Create();
+        byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            builder.Append(bytes[i].ToString("x2"));
+        }
+        return builder.ToString();
+    }
+    
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
     {
@@ -37,6 +51,8 @@ public class UsersController(AppDbContext context) : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Users>> PutUsers(Users user)
     {
+        user.PasswordHash = GenerateSha256Hash(user.PasswordHash);
+        
         context.Users.Add(user);
         await context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetUsers), new { id = user.Id }, user);
@@ -49,7 +65,11 @@ public class UsersController(AppDbContext context) : ControllerBase
         {
             return BadRequest();
         }
+        
+        user.PasswordHash = GenerateSha256Hash(user.PasswordHash);
+        
         context.Users.Update(user);
+        
         try
         {
             await context.SaveChangesAsync();
