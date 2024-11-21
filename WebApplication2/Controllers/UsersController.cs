@@ -32,7 +32,7 @@ public class UsersController(AppDbContext context) : ControllerBase
         }
         return await context.Users.ToListAsync();
     }
-
+    
     [HttpGet("{id}")]
     public async Task<ActionResult<Users>> GetUsers(int id)
     {

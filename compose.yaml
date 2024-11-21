@@ -4,3 +4,12 @@
     build:
       context: .
       dockerfile: WebApplication2/Dockerfile
+    environment:
+      - DB_SERVER=192.168.144.2
+      - DB_PORT=3306
+      - DB_USER=faria
+      - DB_PASSWORD=/sys/F4ri4
+      - DB_NAME=AppDbs
+    ports:
+      - 5000:8080
+      - 5001:8081

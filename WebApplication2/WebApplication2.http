@@ -1,6 +1,24 @@
 @WebApplication2_HostAddress = http://localhost:5257
 
-GET {{WebApplication2_HostAddress}}/weatherforecast/
+GET {{WebApplication2_HostAddress}}/api/Users/
 Accept: application/json
+
+###
+
+GET {{WebApplication2_HostAddress}}/api/Users/2
+Accept: application/json
+
+###
+
+POST {{WebApplication2_HostAddress}}/api/Users
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Rogerio",
+  "email": "rogeriobrabo@email.com",
+  "passwordHash": "senhasupersecreta",
+  "rule": "premium"
+}
 
 ###

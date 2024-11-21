@@ -13,7 +13,6 @@
         "packagesPath": "/home/gabriel/.nuget/packages/",
         "outputPath": "/mnt/E/Projetos/ShopList/backend/WebApplication2/WebApplication2/obj/",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "/home/gabriel/.nuget/NuGet/NuGet.Config"
         ],
